@@ -35,10 +35,41 @@ public class Stella {
 
             }
 
-            else {
-                lists[counter] = new Task(user_input);
+            else if (user_input.contains("todo")) {
+                String description = user_input.substring(5);
+                lists[counter] = new ToDo(description);
+                System.out.println(" > added: " + lists[counter]);
                 counter = counter + 1;
-                System.out.println(" > added: " + user_input);
+                System.out.println(" > Now you have " + counter + " task(s) in the list");
+
+            }
+
+            else if (user_input.contains("deadline")) {
+                String description = user_input.substring(9, user_input.indexOf('/'));
+                String deadline = user_input.substring(user_input.indexOf('/') + 1);
+
+                lists[counter] = new Deadline(description, deadline);
+                System.out.println(" > added: " + lists[counter]);
+                counter = counter + 1;
+                System.out.println(" > Now you have " + counter + " task(s) in the list");
+
+            }
+
+            else if (user_input.contains("event")) {
+                String description = user_input.substring(6,user_input.indexOf('/'));
+                String start = user_input.substring(user_input.indexOf('/') + 1,user_input.lastIndexOf('/') );
+                String end = user_input.substring(user_input.lastIndexOf('/') + 1);
+
+                lists[counter] = new Event(description, start, end);
+                System.out.println(" > added: " + lists[counter]);
+                counter = counter + 1;
+                System.out.println(" > Now you have " + counter + " task(s) in the list");
+
+            }
+
+
+            else {
+                System.out.println("Invalid Comment. Retype comment: ");
             }
 
             user_input = scan.nextLine();
