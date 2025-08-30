@@ -44,7 +44,6 @@ public interface DataHandler {
                 String task_desription;
                 ArrayList<Task> temp = new ArrayList<>();
                 while ((task_desription = reader.readLine()) != null) {
-                    System.out.println("task_description");
                     temp.add(DataHandler.lineToTask(task_desription));
                 }
 

@@ -74,6 +74,13 @@ public class Stella {
                     }
                     String description = user_input.substring(9, user_input.indexOf('/'));
                     String deadline = user_input.substring(user_input.indexOf('/') + 1);
+                    if (deadline.length() == 10) {
+                        deadline = TimeConverter.convertDate(deadline);
+                    }
+                    if (deadline.length() == 15) {
+                        deadline = TimeConverter.convertDatewithTime(deadline);
+                    }
+
                     Deadline temp = new Deadline(description, deadline);
                     lists.add(temp);
                     System.out.println(" > added: " + lists.get(lists.size() - 1));
@@ -88,6 +95,18 @@ public class Stella {
                     String description = user_input.substring(6, user_input.indexOf('/'));
                     String start = user_input.substring(user_input.indexOf('/') + 1, user_input.lastIndexOf('/'));
                     String end = user_input.substring(user_input.lastIndexOf('/') + 1);
+                    if (start.length() == 10) {
+                        start = TimeConverter.convertDate(start);
+                    }
+                    if (start.length() == 15) {
+                        start = TimeConverter.convertDatewithTime(start);
+                    }
+                    if (end.length() == 10) {
+                        end = TimeConverter.convertDate(end);
+                    }
+                    if (end.length() == 15) {
+                        end = TimeConverter.convertDatewithTime(end);
+                    }
                     Event temp = new Event(description, start, end);
                     lists.add(temp);
                     System.out.println(" > added: " + lists.get(lists.size() - 1));
