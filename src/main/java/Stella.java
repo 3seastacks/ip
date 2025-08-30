@@ -3,9 +3,10 @@ import java.util.ArrayList;
 public class Stella {
     public static void main(String[] args) {
 
-        Scanner scan = new Scanner(System.in);
-        ArrayList<Task> lists = new ArrayList<>();
 
+        Scanner scan = new Scanner(System.in);
+
+        ArrayList<Task> lists = DataHandler.readFile();
 
         System.out.println(" > Hello! I am Stella");
         System.out.println(" > What can I do for you?");
@@ -29,9 +30,8 @@ public class Stella {
                     Task temp = lists.remove(index);
                     System.out.println("I have removed the following: ");
                     System.out.println("" + temp);
-
-
                     System.out.println(" > Now you have " + lists.size() + " task(s) in the list");
+                    DataHandler.modifyTaskList(lists);
 
                 }
 
@@ -45,6 +45,7 @@ public class Stella {
                     lists.get(index).markUndone();
                     System.out.println(" > OK, I've marked this task as not done yet: ");
                     System.out.println(" > " + lists.get(index));
+                    DataHandler.modifyTaskList(lists);
 
                 } else if (user_input.contains("mark")) {
                     if (user_input.length() <= 5) {
@@ -54,16 +55,18 @@ public class Stella {
                     lists.get(index).markDone();
                     System.out.println(" > Nice! I've marked this task as done: ");
                     System.out.println(" > " + lists.get(index));
+                    DataHandler.modifyTaskList(lists);
 
                 } else if (user_input.contains("todo")) {
                     if (user_input.length() <= 5) {
                         throw new IncompleteInstructionException(user_input);
                     }
                     String description = user_input.substring(5);
-                    lists.add(new ToDo(description));
+                    ToDo temp = new ToDo(description);
+                    lists.add(temp);
                     System.out.println(" > added: " + lists.get(lists.size() - 1));
-
                     System.out.println(" > Now you have " + lists.size() + " task(s) in the list");
+                    DataHandler.addTask(temp);
 
                 } else if (user_input.contains("deadline")) {
                     if (user_input.length() <= 9) {
@@ -71,11 +74,12 @@ public class Stella {
                     }
                     String description = user_input.substring(9, user_input.indexOf('/'));
                     String deadline = user_input.substring(user_input.indexOf('/') + 1);
-
-                    lists.add(new Deadline(description, deadline));
+                    Deadline temp = new Deadline(description, deadline);
+                    lists.add(temp);
                     System.out.println(" > added: " + lists.get(lists.size() - 1));
 
                     System.out.println(" > Now you have " + lists.size() + " task(s) in the list");
+                    DataHandler.addTask(temp);
 
                 } else if (user_input.contains("event")) {
                     if (user_input.length() <= 6) {
@@ -84,12 +88,12 @@ public class Stella {
                     String description = user_input.substring(6, user_input.indexOf('/'));
                     String start = user_input.substring(user_input.indexOf('/') + 1, user_input.lastIndexOf('/'));
                     String end = user_input.substring(user_input.lastIndexOf('/') + 1);
-
-                    lists.add(new Event(description, start, end));
+                    Event temp = new Event(description, start, end);
+                    lists.add(temp);
                     System.out.println(" > added: " + lists.get(lists.size() - 1));
 
                     System.out.println(" > Now you have " + lists.size() + " task(s) in the list");
-
+                    DataHandler.addTask(temp);
 
                 } else {
                     throw new UnknownInstructionException(user_input);
