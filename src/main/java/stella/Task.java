@@ -15,19 +15,29 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public String curStatus() {
+    /**
+     * Indicate whether a task has been completed or not
+     *
+     * @return "X" represent that item is complete, while " " represent item is not completed
+     */
+    public String getCurrentStatus() {
         if (isDone) {
             return "X";
-        }
-        else {
+        } else {
             return " ";
         }
     }
 
+    /**
+     * Mark a task as completed
+     */
     public void markDone() {
         isDone = true;
     }
 
+    /**
+     * Mark a task as uncompleted
+     */
     public void markUndone() {
         isDone = false;
     }
@@ -36,11 +46,8 @@ public abstract class Task {
         return this.description;
     }
 
-
-
     @Override
     public String toString() {
-        return "[" + this.curStatus() + "] " + this.description;
+        return "[" + this.getCurrentStatus() + "] " + this.description;
     }
-
 }

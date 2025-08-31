@@ -1,4 +1,5 @@
 package stella;
+
 /**
  * Represent a task with the only detail being the task description
  */
