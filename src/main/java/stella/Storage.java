@@ -74,7 +74,6 @@ public interface Storage {
                 System.out.println("IOException: " + e.getMessage());
             }
         }
-
         return new ArrayList<>();
     }
 
