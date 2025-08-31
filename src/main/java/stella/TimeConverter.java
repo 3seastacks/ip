@@ -1,4 +1,5 @@
 package stella;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,15 +15,18 @@ public class TimeConverter {
             int year = Integer.parseInt(rawFormat.substring(6, 10));
             int hour = Integer.parseInt(rawFormat.substring(11, 13));
             int min = Integer.parseInt(rawFormat.substring(13, 15));
-            LocalDateTime input = LocalDateTime.of(year, month,day, hour,min);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:ss, dd MMMM yyyy");
+            LocalDateTime input = LocalDateTime.of(year, month,day, hour, min);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd MMMM yyyy");
 
             return input.format(formatter);
         }
         catch (NumberFormatException e) {
-            System.out.println("The date you key in may be invalid.");
+            return rawFormat;
         }
-        return "Invalid Timing";
+        catch (DateTimeException e) {
+            System.out.println(e.getMessage());
+        }
+        return "Unknown Timing";
     }
     public static String convertDate(String rawFormat) {
         try {
@@ -36,9 +40,14 @@ public class TimeConverter {
             return input.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
         }
         catch (NumberFormatException e) {
-            System.out.println("The date you key in may be invalid.");
+
+            return rawFormat;
         }
-        return "Invalid Timing";
+        catch (DateTimeException e) {
+            System.out.println(e.getMessage());
+        }
+        return "Unknown Timing";
     }
+
 
 }
