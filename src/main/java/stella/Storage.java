@@ -7,6 +7,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 
+/**
+ * Responsible for loading tasks from the local storage
+ * and saving tasks to the local storage
+ */
 public interface Storage {
     public final String DATA_STORAGE_PATH = "../data/stella.txt";
 

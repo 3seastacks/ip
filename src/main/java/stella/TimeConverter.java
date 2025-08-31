@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-
+/**
+ * Responsible for converting date (or date with timing) to a more
+ * human-readable format
+ */
 public class TimeConverter {
     // input is either dd-mm-yyyy or dd-mm-yyyy-tttt
     public static String convertDatewithTime(String rawFormat) {

@@ -1,4 +1,10 @@
 package stella;
+
+/**
+ * Responsible in making sense of the user command, for example to
+ * identify the command type and also to reformat the date provided
+ * by the user to a more human-readable format
+ */
 public class Parser {
     private TaskList list;
 
