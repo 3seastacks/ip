@@ -1,5 +1,9 @@
 package stella;
 
+/**
+ * Represents a task that have a start date/time and an end date/time. An Event is
+ * represented by 3 strings, which are the description, the start and the end.
+ */
 public class Event extends Task{
     protected String start;
     protected String end;

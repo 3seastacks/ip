@@ -1,6 +1,11 @@
 package stella;
 
 import java.util.Scanner;
+
+/**
+ * Responsible for dealing with the interactions with the user, including
+ * greeting, responding to unexpected responses from user and farewell
+ */
 public class Ui {
     private Parser parser;
     public Ui(Parser parser) {

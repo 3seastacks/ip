@@ -2,6 +2,9 @@ package stella;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a group of tasks
+ */
 public class TaskList {
     public ArrayList<Task> list;
     public TaskList(ArrayList<Task> input) {

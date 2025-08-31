@@ -1,5 +1,11 @@
 package stella;
 
+/**
+ * Task contains a String description (which describe the task)
+ * and a boolean isDone (with true indicating that the task is
+ * completed and false indicating that the task is not completed)
+ * Task is the parent of 3 classes: Deadline, Event and ToDo
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
