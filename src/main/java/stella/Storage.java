@@ -10,6 +10,10 @@ import java.io.FileNotFoundException;
 
 import java.util.ArrayList;
 
+import stella.task.Deadline;
+import stella.task.Event;
+import stella.task.Task;
+import stella.task.ToDo;
 
 /**
  * Responsible for loading tasks from the local storage

@@ -1,10 +1,13 @@
-package stella;
+package stella.task;
 
 import stella.exception.ExcessParameterException;
 import stella.exception.IncompleteInstructionException;
 import stella.exception.InsufficientParameterException;
 import stella.exception.StellaException;
 import stella.exception.UnknownInstructionException;
+
+import stella.Parser;
+import stella.Priority;
 
 /**
  * Represents a type of task that have a deadline. It is represented by

@@ -1,5 +1,6 @@
-package stella;
+package stella.task;
 
+import stella.Priority;
 /**
  * Task contains a String description (which describe the task)
  * and a boolean isDone (with true indicating that the task is

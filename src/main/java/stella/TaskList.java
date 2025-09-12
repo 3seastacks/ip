@@ -3,6 +3,7 @@ package stella;
 import java.util.ArrayList;
 
 import stella.exception.IncompleteInstructionException;
+import stella.task.Task;
 
 /**
  * Represents a group of tasks

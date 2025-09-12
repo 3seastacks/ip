@@ -1,9 +1,12 @@
-package stella;
+package stella.task;
 
 import stella.exception.ExcessParameterException;
 import stella.exception.IncompleteInstructionException;
 import stella.exception.StellaException;
 import stella.exception.UnknownInstructionException;
+
+import stella.Parser;
+import stella.Priority;
 
 /**
  * Represent a task with the only detail being the task description

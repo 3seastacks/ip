@@ -5,6 +5,10 @@ import stella.exception.IncompleteInstructionException;
 import stella.exception.InsufficientParameterException;
 import stella.exception.UnknownInstructionException;
 
+import stella.task.Deadline;
+import stella.task.Event;
+import stella.task.ToDo;
+
 /**
  * Responsible in making sense of the user command, for example to
  * identify the command type and also to reformat the date provided
