@@ -31,6 +31,8 @@ public class Ui {
             return e.getMessage() + " is invalid. Type new message: ";
         } catch (IncompleteInstructionException e) {
             return e.getMessage() + " is incomplete. Type new message: ";
+        } catch (ExcessParameterException | InsufficientParameterException e) {
+            return e.getMessage() + "Type new messagee: ";
         } catch (Exception e) {
             return "Did you key in the correct message? Type new message: ";
         }

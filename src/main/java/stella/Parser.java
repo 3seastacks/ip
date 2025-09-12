@@ -1,5 +1,7 @@
 package stella;
 
+import java.util.stream.Collectors;
+
 /**
  * Responsible in making sense of the user command, for example to
  * identify the command type and also to reformat the date provided
@@ -18,29 +20,15 @@ public class Parser {
      * @param description A String consisting of user's command
      * @return Stella's response
      * @throws IncompleteInstructionException If command contain insufficient information
-     * @throws UnknownInstructionException If no such command exists
+     * @throws UnknownInstructionException If no
+     * such command exists
      */
     public String findCommand(String description) throws IncompleteInstructionException,
-            UnknownInstructionException {
+            UnknownInstructionException, ExcessParameterException, InsufficientParameterException {
         if (description.equals(("list"))) {
             return this.tasks.printList();
         } else if (description.contains("find")) {
-            if (description.length() <= 5) {
-                throw new IncompleteInstructionException(description);
-            }
-
-            String keyword = "";
-            if (description.length() == 6) {
-                keyword = keyword + String.valueOf(description.charAt(5));
-            }
-            keyword = keyword + description.substring(6);
-
-            TaskList temp = tasks.findItem(keyword);
-            if (temp.getList().isEmpty()) {
-                return "No items found";
-            } else {
-                return temp.printList();
-            }
+            return tasks.findItem(description);
         } else if (description.contains("delete")) {
             int index = findIndexForModification("delete", description);
             return tasks.deleteItem(index);
@@ -51,40 +39,17 @@ public class Parser {
             int index = findIndexForModification("mark", description);
             return tasks.modifyItem(index, "mark");
         } else if (description.contains("todo")) {
-            if (description.length() <= 5) {
-                throw new IncompleteInstructionException(description);
-            }
-
-            String details = description.substring(5);
-            ToDo temp = new ToDo(details);
+            ToDo temp = ToDo.createTask(description);
             return tasks.addItem(temp);
         } else if (description.contains("deadline")) {
-            if (description.length() <= 9) {
-                throw new IncompleteInstructionException(description);
-            }
-
-            String details = description.substring(9, description.indexOf('/'));
-            String deadline = description.substring(description.indexOf('/') + 1);
-            deadline = this.formatTime(deadline);
-            Deadline temp = new Deadline(details, deadline);
+            Deadline temp = Deadline.createTask(description);
             return tasks.addItem(temp);
         } else if (description.contains("event")) {
-            if (description.length() <= 6) {
-                throw new IncompleteInstructionException(description);
-            }
-
-            String details = description.substring(6, description.indexOf('/'));
-            String start = description.substring(description.indexOf('/') + 1,
-                    description.lastIndexOf('/'));
-            String end = description.substring(description.lastIndexOf('/') + 1);
-            start = this.formatTime(start);
-            end = this.formatTime(end);
-            Event temp = new Event(details, start, end);
+            Event temp = Event.createTask(description);
             return tasks.addItem(temp);
         } else {
             throw new UnknownInstructionException(description);
         }
-
     }
 
     private int findIndexForModification(String marker, String description)
@@ -103,7 +68,7 @@ public class Parser {
         return Integer.valueOf(description.substring(referencePoint)) - 1;
     }
 
-    private String formatTime(String time) {
+    public static String formatTime(String time) {
         if (time.length() == 10) {
             return TimeConverter.convertDate(time);
         }
@@ -111,5 +76,9 @@ public class Parser {
             return TimeConverter.convertDateWithTime(time);
         }
         return time;
+    }
+
+    public static long countParameter(String command) {
+        return command.chars().filter(c -> c == '/').count();
     }
 }

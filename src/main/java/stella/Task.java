@@ -9,10 +9,18 @@ package stella;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
+    protected Priority taskPriority;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.taskPriority = Priority.UNDECIDED;
+    }
+
+    public Task(String description, Priority taskPriority) {
+        this.description = description;
+        this.isDone = false;
+        this.taskPriority = taskPriority;
     }
 
     /**
@@ -50,4 +58,5 @@ public abstract class Task {
     public String toString() {
         return "[" + this.getCurrentStatus() + "] " + this.description;
     }
+
 }

@@ -28,17 +28,25 @@ public interface Storage {
     public static Task createTask(String description) {
         Task newTask = null;
         if (description.charAt(1) == 'T') {
-            newTask = new ToDo(description.substring(7));
+            int pointer1 = description.indexOf(" (Priority: ");
+            String priorityLevel = description.substring(pointer1 + 12, description.length() - 1);
+            newTask = new ToDo(description.substring(7, pointer1), Priority.valueOf(priorityLevel));
         } else if (description.charAt(1) == 'D') {
-            int pointer1 = description.indexOf("(by: ");
-            newTask = new Deadline(description.substring(7, pointer1 - 1),
-                    description.substring(pointer1 + 5, description.length() - 1));
+            int pointer1 = description.indexOf(" (by: ");
+            int pointer2 = description.indexOf(" (Priority: ");
+            String details = description.substring(7, pointer1);
+            String deadline = description.substring(pointer1 + 6, pointer2 - 1);
+            String priorityLevel = description.substring(pointer2 + 12, description.length() - 1);
+            newTask = new Deadline(details, deadline, Priority.valueOf(priorityLevel));
         } else if (description.charAt(1) == 'E') {
             int pointer1 = description.indexOf(" (from: ");
             int pointer2 = description.indexOf(" | to: ");
-            newTask = new Event(description.substring(7, pointer1),
-                    description.substring(pointer1 + 8, pointer2),
-                    description.substring(pointer2 + 7, description.length() - 1));
+            int pointer3 = description.indexOf(" (Priority: ");
+            String details = description.substring(7, pointer1);
+            String start = description.substring(pointer1 + 8, pointer2);
+            String end = description.substring(pointer2 + 7, pointer3 - 1);
+            String priorityLevel = description.substring(pointer3 + 12, description.length() - 1);
+            newTask = new Event(details, start, end, Priority.valueOf(priorityLevel));
         }
 
         if (description.charAt(4) == 'X') {

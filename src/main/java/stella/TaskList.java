@@ -86,20 +86,37 @@ public class TaskList {
 
     /**
      * Search for all the tasks whose description matches the identifier
-     * @param identifier A keyword that find tasks whose description matches the identifier
+     * @param description Contain find command and a keyword to identify tasks
      * @return A TaskList with tasks whose description matches the identifier
      */
-    public TaskList findItem(String identifier) {
+    public String findItem(String description) throws IncompleteInstructionException{
+        if (description.length() <= 5) {
+            throw new IncompleteInstructionException(description);
+        }
+        String keyword = "";
+        if (description.length() == 6) {
+            keyword = keyword + description.charAt(5);
+        } else {
+            keyword = keyword + description.substring(5);
+        }
+
         TaskList result = new TaskList(new ArrayList<>());
         if (this.tasks.isEmpty()) {
-            return result;
+            return "Empty task list. Cannot Search for Anything";
         }
         for (int i = 1; i <= tasks.size(); i = i + 1) {
-            if (tasks.get(i - 1).getDescription().contains(identifier)) {
+            System.out.println(keyword);
+            if (tasks.get(i - 1).toString().contains(keyword)) {
                 result.tasks.add(tasks.get(i - 1));
             }
         }
-        return result;
+        if (this.tasks.isEmpty()) {
+            return "No items found";
+        } else {
+            return result.printList();
+        }
     }
 
 }
+
+
