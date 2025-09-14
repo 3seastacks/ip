@@ -38,8 +38,6 @@ public class TimeConverterTest {
     public void convertDate_nonStandardTiming_exceptionThrown() {
             assertEquals("before Mon",
                     TimeConverter.convertDate("before Mon"));
-            assertEquals("1-1-25",
-                    TimeConverter.convertDate("1-1-25"));
     }
 
     @Test

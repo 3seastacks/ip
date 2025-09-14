@@ -20,7 +20,9 @@ import stella.task.ToDo;
  * and saving tasks to the local storage
  */
 public interface Storage {
-    public final String DATA_STORAGE_PATH = "../data/stella.txt";
+    String DATA_STORAGE_PATH = "../data/stella.txt";
+    String taskPrefixExample = "[T][X] ";
+    int taskPrefixLength = taskPrefixExample.length();
 
     /**
      * Return task with corresponding details (e.g. task description, type of task,
@@ -29,35 +31,77 @@ public interface Storage {
      * @param description Specify task to be created
      * @return Corresponding task that matches description given
      */
-    public static Task createTask(String description) {
+    static Task createTask(String description) {
         Task newTask = null;
-        if (description.charAt(1) == 'T') {
-            int pointer1 = description.indexOf(" (Priority: ");
-            String priorityLevel = description.substring(pointer1 + 12, description.length() - 1);
-            newTask = new ToDo(description.substring(7, pointer1), Priority.valueOf(priorityLevel));
-        } else if (description.charAt(1) == 'D') {
-            int pointer1 = description.indexOf(" (by: ");
-            int pointer2 = description.indexOf(" (Priority: ");
-            String details = description.substring(7, pointer1);
-            String deadline = description.substring(pointer1 + 6, pointer2 - 1);
-            String priorityLevel = description.substring(pointer2 + 12, description.length() - 1);
-            newTask = new Deadline(details, deadline, Priority.valueOf(priorityLevel));
-        } else if (description.charAt(1) == 'E') {
-            int pointer1 = description.indexOf(" (from: ");
-            int pointer2 = description.indexOf(" | to: ");
-            int pointer3 = description.indexOf(" (Priority: ");
-            String details = description.substring(7, pointer1);
-            String start = description.substring(pointer1 + 8, pointer2);
-            String end = description.substring(pointer2 + 7, pointer3 - 1);
-            String priorityLevel = description.substring(pointer3 + 12, description.length() - 1);
-            newTask = new Event(details, start, end, Priority.valueOf(priorityLevel));
+        int indexForTaskType = 1;
+        int indexForTaskCompletion = 4;
+
+        if (description.charAt(indexForTaskType) == 'T') {
+            newTask = Storage.createToDo(description);
+        } else if (description.charAt(indexForTaskType) == 'D') {
+            newTask = Storage.createDeadline(description);
+        } else if (description.charAt(indexForTaskType) == 'E') {
+            newTask = Storage.createEvent(description);
+        } else {
+            System.out.println("Invalid Data Type");
         }
 
-        if (description.charAt(4) == 'X') {
+        if (description.charAt(indexForTaskCompletion) == 'X') {
             newTask.markDone();
         }
 
         return newTask;
+    }
+
+    private static ToDo createToDo(String description) {
+        String token1 = " (Priority: ";
+
+        int startOfToken1 = description.indexOf(token1);
+
+        int endOfToken1 = startOfToken1 + token1.length();
+
+        String details = description.substring(taskPrefixLength, startOfToken1);
+        String priorityLevel = description.substring(endOfToken1, description.length() - 1);
+
+        return new ToDo(details, Priority.valueOf(priorityLevel));
+    }
+
+    private static Deadline createDeadline(String description) {
+        String token1 = " (by: ";
+        String token2 = ") (Priority: ";
+
+        int startOfToken1 = description.indexOf(token1);
+        int startOfToken2 = description.indexOf(token2);
+
+        int endOfToken1 = startOfToken1 + token1.length();
+        int endOfToken2 = startOfToken2 + token2.length();
+
+        String details = description.substring(taskPrefixLength, startOfToken1);
+        String deadline = description.substring(endOfToken1, startOfToken2);
+        String priorityLevel = description.substring(endOfToken2, description.length() - 1);
+
+        return new Deadline(details, deadline, Priority.valueOf(priorityLevel));
+    }
+
+    private static Event createEvent(String description) {
+        String token1 = " (from: ";
+        String token2 = " | to: ";
+        String token3 = ") (Priority: ";
+
+        int startOfToken1 = description.indexOf(token1);
+        int startOfToken2 = description.indexOf(token2);
+        int startOfToken3 = description.indexOf(token3);
+
+        int endOfToken1 = startOfToken1 + token1.length();
+        int endOfToken2 = startOfToken2 + token2.length();
+        int endOfToken3 = startOfToken2 + token2.length();
+
+        String details = description.substring(taskPrefixLength, startOfToken1);
+        String start = description.substring(endOfToken1, startOfToken2);
+        String end = description.substring(endOfToken2, startOfToken3);
+        String priorityLevel = description.substring(endOfToken3, description.length() - 1);
+
+        return new Event(details, start, end, Priority.valueOf(priorityLevel));
     }
 
     /**
@@ -66,22 +110,24 @@ public interface Storage {
      *
      * @return ArrayList<Task> containing tasks based on information stored in local storage
      */
-    public static ArrayList<Task> readFile() {
+    static ArrayList<Task> readFile() {
         for (int attempt = 1; attempt <= 2; attempt++) {
             try {
-                BufferedReader reader = new BufferedReader(new FileReader((DATA_STORAGE_PATH)));
-                String taskDescription;
+                BufferedReader reader = new BufferedReader(new FileReader(DATA_STORAGE_PATH));
                 ArrayList<Task> tasks = new ArrayList<>();
+                String taskDescription = reader.readLine();
 
-                while ((taskDescription = reader.readLine()) != null) {
-                    tasks.add(Storage.createTask(taskDescription));
+                while (taskDescription != null) {
+                    Task currentTask = Storage.createTask(taskDescription);
+                    tasks.add(currentTask);
+                    taskDescription = reader.readLine();
                 }
 
                 return tasks;
             } catch (FileNotFoundException e) {
                 File folder = new File("../data");
                 folder.mkdirs();
-                File dataFile = new File(DATA_STORAGE_PATH);
+                new File(DATA_STORAGE_PATH);
             } catch (IOException e) {
                 System.out.println("IOException: " + e.getMessage());
             }
@@ -94,7 +140,7 @@ public interface Storage {
      *
      * @param task Task to be added to local storage
      */
-    public static void addTask(Task task) {
+    static void addTask(Task task) {
         try {
             FileWriter writer = new FileWriter(DATA_STORAGE_PATH, true);
             writer.write(task.toString());
@@ -110,14 +156,16 @@ public interface Storage {
      *
      * @param list The newly modified list used to update local storage
      */
-    public static void modifyTaskList(ArrayList<Task> list) {
+    static void modifyTaskList(ArrayList<Task> list) {
         try {
             FileWriter writer = new FileWriter(DATA_STORAGE_PATH, false);
+
             for (int i = 0 ; i < list.size(); i++) {
-                System.out.println(list.get(i).toString());
-                writer.write(list.get(i).toString());
+                String taskDescription = list.get(i).toString();
+                writer.write(taskDescription);
                 writer.write(System.lineSeparator());
             }
+
             writer.close();
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());

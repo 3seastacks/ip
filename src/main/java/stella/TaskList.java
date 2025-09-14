@@ -3,13 +3,16 @@ package stella;
 import java.util.ArrayList;
 
 import stella.exception.IncompleteInstructionException;
+import stella.exception.UnknownInstructionException;
 import stella.task.Task;
 
 /**
  * Represents a group of tasks
  */
 public class TaskList {
+
     public ArrayList<Task> tasks;
+
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
@@ -23,6 +26,7 @@ public class TaskList {
         if (this.tasks.isEmpty()) {
             return "Task list is empty. Add one now: ";
         }
+
         String result = "";
         for (int i = 1; i <= tasks.size(); i = i + 1) {
             result = result + i + ". " + tasks.get(i - 1) + "\n";
@@ -39,11 +43,9 @@ public class TaskList {
      */
     public String deleteItem(int index) {
         Task temp = tasks.remove(index);
-
         Storage.modifyTaskList(tasks);
-        return "I have removed the following: \n" + temp +
-                "\n" + "Now you have " + tasks.size() +
-                " task(s) in the list";
+        return "I have removed the following: \n" + temp +  "\n" +
+                "Now you have " + tasks.size() + " task(s) in the list";
     }
 
     /**
@@ -55,19 +57,20 @@ public class TaskList {
      * @param description Either "mark" or "unmark"
      * @return Stella's response associated with modification of task
      */
-    public String modifyItem(int index, String description) {
+    public String modifyItem(int index, String description) throws UnknownInstructionException {
         if (description == "unmark") {
             tasks.get(index).markUndone();
             Storage.modifyTaskList(tasks);
             return "OK, I've marked this task as not done yet: " + "\n" + tasks.get(index);
         }
-
-        if (description == "mark") {
+        else if (description == "mark") {
             tasks.get(index).markDone();
             Storage.modifyTaskList(tasks);
             return "Nice! I've marked this task as done: " + "\n" + tasks.get(index);
         }
-        return "";
+        else {
+            throw new UnknownInstructionException("expected mark/unmark, but received " + description);
+        }
     }
 
     /**
@@ -79,12 +82,8 @@ public class TaskList {
     public String addItem(Task task) {
         tasks.add(task);
         Storage.addTask(task);
-        return "added: " + tasks.get(tasks.size() - 1) + "\n" + "Now you have "
-                + tasks.size() + " task(s) in the list";
-    }
-
-    public ArrayList<Task> getList() {
-        return tasks;
+        return "added: " + task + "\n"
+                + "Now you have "  + tasks.size() + " task(s) in the list";
     }
 
     /**
@@ -92,28 +91,36 @@ public class TaskList {
      * @param description Contain find command and a keyword to identify tasks
      * @return A TaskList with tasks whose description matches the identifier
      */
-    public String findItem(String description) throws IncompleteInstructionException{
-        if (description.length() <= 5) {
+    public String findItem(String description) throws IncompleteInstructionException {
+        String command = "find ";
+
+        if (description.length() <= command.length()) {
             throw new IncompleteInstructionException(description);
         }
+
+        if (this.tasks.isEmpty()) {
+            return "Empty task list. Cannot search for anything";
+        }
+
         String keyword = "";
-        if (description.length() == 6) {
-            keyword = keyword + description.charAt(5);
+        int keywordLength = description.length() - command.length();
+        int startIndexForKeyword = command.length();
+        if (keywordLength == 1) {
+            keyword += description.charAt(startIndexForKeyword);
         } else {
-            keyword = keyword + description.substring(5);
+            keyword += description.substring(startIndexForKeyword);
         }
 
         TaskList result = new TaskList(new ArrayList<>());
-        if (this.tasks.isEmpty()) {
-            return "Empty task list. Cannot Search for Anything";
-        }
         for (int i = 1; i <= tasks.size(); i = i + 1) {
-            System.out.println(keyword);
-            if (tasks.get(i - 1).toString().contains(keyword)) {
-                result.tasks.add(tasks.get(i - 1));
+            Task currentTask = tasks.get(i-1);
+            String taskDescription = currentTask.toString();
+            if (taskDescription.contains(keyword)) {
+                result.tasks.add(currentTask);
             }
         }
-        if (this.tasks.isEmpty()) {
+
+        if (result.tasks.isEmpty()) {
             return "No items found";
         } else {
             return result.printList();

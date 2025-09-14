@@ -13,6 +13,8 @@ import stella.Priority;
  */
 public class ToDo extends Task {
 
+    public static final String commandKeyword = "todo ";
+
     public ToDo(String description) {
         super(description);
     }
@@ -28,28 +30,38 @@ public class ToDo extends Task {
 
     public static ToDo createTask(String description) throws StellaException {
         try {
-            if (description.length() <= 5) {
-                throw new IncompleteInstructionException(description);
-            }
-            if (Parser.countParameter(description) > 1) {
-                throw new ExcessParameterException(Parser.countParameter(description)
-                        + " input is provided, when at most 1 parameter should be provided. ");
-            } else if (Parser.countParameter(description) == 0) {
-                String details = description.substring(5);
-                return new ToDo(details);
-            } else if (Parser.countParameter(description) == 1) {
-                String details = description.substring(5, description.indexOf('/'));
-                String priority = description.substring(description.indexOf('/') + 1);
-                return new ToDo(details, Priority.valueOf(priority));
-            } else {
-                System.out.println("There should not be negative number of input provided.");
-                return null;
-            }
-        }
+            ToDo.checkDescription(description);
+            if (Parser.countParameter(description) == 0) {
+                String details = description.substring(commandKeyword.length());
 
+                return new ToDo(details);
+            }
+            if (Parser.countParameter(description) == 1) {
+                int slashIndex = description.indexOf('/');
+
+                String details = description.substring(commandKeyword.length(), slashIndex);
+                String priority = description.substring(slashIndex + 1);
+
+                return new ToDo(details, Priority.valueOf(priority));
+            }
+            return null;
+        }
         catch (IllegalArgumentException e) {
             throw new UnknownInstructionException("Priority value");
         }
 
+    }
+
+    private static void checkDescription(String description) throws StellaException {
+        if (description.length() <= commandKeyword.length()) {
+            throw new IncompleteInstructionException(description);
+        }
+
+        long numberOfParameter = Parser.countParameter(description);
+        if (numberOfParameter > 1) {
+            throw new ExcessParameterException(numberOfParameter
+                    + " input (excluding task description) is provided,"
+                    + " when at most 1 parameter should be provided. ");
+        }
     }
 }

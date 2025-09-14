@@ -2,6 +2,9 @@ package stella;
 
 import java.util.ArrayList;
 
+import stella.exception.IncompleteInstructionException;
+import stella.exception.UnknownInstructionException;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -13,7 +16,7 @@ public class ParserTest {
             new Parser(new TaskList(new ArrayList<>())).findCommand("hi");
             fail();
         } catch (UnknownInstructionException e) {
-            assertEquals("hi",e.getMessage());
+            assertEquals("hi", e.getMessage());
         } catch (IncompleteInstructionException e) {
             // wrong exception thrown
             fail();
@@ -26,7 +29,7 @@ public class ParserTest {
             new Parser(new TaskList(new ArrayList<>())).findCommand("mark");
             fail();
         } catch (IncompleteInstructionException e) {
-            assertEquals("mark",e.getMessage());
+            assertEquals("mark", e.getMessage());
         } catch (UnknownInstructionException e) {
             // wrong exception thrown
             fail();

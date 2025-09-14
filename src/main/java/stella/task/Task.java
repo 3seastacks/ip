@@ -51,10 +51,6 @@ public abstract class Task {
         isDone = false;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
     @Override
     public String toString() {
         return "[" + this.getCurrentStatus() + "] " + this.description;
