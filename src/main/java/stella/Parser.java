@@ -1,8 +1,7 @@
 package stella;
 
-import stella.exception.ExcessParameterException;
 import stella.exception.IncompleteInstructionException;
-import stella.exception.InsufficientParameterException;
+import stella.exception.StellaException;
 import stella.exception.UnknownInstructionException;
 
 import stella.task.Deadline;
@@ -30,20 +29,21 @@ public class Parser {
      * @throws UnknownInstructionException If no
      * such command exists
      */
-    public String findCommand(String description) throws IncompleteInstructionException,
-            UnknownInstructionException, ExcessParameterException, InsufficientParameterException {
+    public String findCommand(String description) throws StellaException {
+        assert description.length() > 0;
+
         if (description.equals(("list"))) {
             return this.tasks.printList();
         } else if (description.contains("find")) {
             return tasks.findItem(description);
         } else if (description.contains("delete")) {
-            int index = findIndexForModification("delete", description);
+            int index = findIndexForModification("delete ", description);
             return tasks.deleteItem(index);
         } else if (description.contains("unmark")) {
-            int index = findIndexForModification("unmark", description);
+            int index = findIndexForModification("unmark ", description);
             return tasks.modifyItem(index, "unmark");
         } else if (description.contains("mark")) {
-            int index = findIndexForModification("mark", description);
+            int index = findIndexForModification("mark ", description);
             return tasks.modifyItem(index, "mark");
         } else if (description.contains("todo")) {
             ToDo temp = ToDo.createTask(description);
@@ -61,25 +61,19 @@ public class Parser {
 
     private int findIndexForModification(String marker, String description)
             throws IncompleteInstructionException {
-        int referencePoint = 0;
-        if (marker == "delete" || marker == "unmark") {
-            referencePoint = 7;
-        } else if (marker == "mark") {
-            referencePoint = 5;
-        }
-
-        if (description.length() <= referencePoint) {
+        if (description.length() <= marker.length()) {
             throw new IncompleteInstructionException(description);
         }
 
-        return Integer.valueOf(description.substring(referencePoint)) - 1;
+        String userInputValue = description.substring(marker.length());
+        return Integer.valueOf(userInputValue) - 1;
     }
 
     public static String formatTime(String time) {
-        if (time.length() == 10) {
+        if (time.length() == TimeConverter.validDate.length()) {
             return TimeConverter.convertDate(time);
         }
-        if (time.length() == 15) {
+        if (time.length() == TimeConverter.validDateWithTime.length()) {
             return TimeConverter.convertDateWithTime(time);
         }
         return time;
