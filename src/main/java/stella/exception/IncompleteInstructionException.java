@@ -1,8 +1,7 @@
 package stella.exception;
 
 /**
- * Throws when the user did not provide
- * sufficient information for Stella to respond.
+ * Throws when the user did not provide sufficient information for Stella to respond.
  */
 public class IncompleteInstructionException extends StellaException {
     /**

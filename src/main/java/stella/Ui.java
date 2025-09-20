@@ -6,8 +6,8 @@ import stella.exception.InsufficientParameterException;
 import stella.exception.UnknownInstructionException;
 
 /**
- * Deals with the interactions with the user, including
- * greeting, responding to unexpected responses from user and farewell.
+ * Deals with the interactions with the user,
+ * including greeting, responding to unexpected responses from user and farewell.
  */
 public class Ui {
     private Parser parser;
@@ -22,8 +22,7 @@ public class Ui {
     }
 
     /**
-     * Interacts with user, while catching exceptions
-     * when user provide unexpected reply.
+     * Interacts with user, while catching exceptions when user provide unexpected reply.
      *
      * @param userInput user's command.
      * @return Stella's response.
@@ -35,7 +34,6 @@ public class Ui {
             } else {
                 return parser.findCommand(userInput);
             }
-
         } catch (UnknownInstructionException e) {
             return e.getMessage() + " is invalid. Type new message: ";
         } catch (IncompleteInstructionException e) {
@@ -47,7 +45,3 @@ public class Ui {
         }
     }
 }
-
-
-
-

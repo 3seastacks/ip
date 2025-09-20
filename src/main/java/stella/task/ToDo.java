@@ -12,8 +12,7 @@ import stella.Priority;
  * The default value for priority is UNDECIDED.
  */
 public class ToDo extends Task {
-
-    public static final String commandKeyword = "todo ";
+    public static final String COMMAND_KEYWORD = "todo ";
 
     public ToDo(String description) {
         super(description);
@@ -31,8 +30,8 @@ public class ToDo extends Task {
     /**
      * Creates and returns a new todo object based on a valid description.
      *
-     * @param description Description of the todo, which comes from the user's commands (e.g.
-     *                    todo shopping).
+     * @param description Description of the todo,
+     *                    which comes from the user's commands (e.g. todo shopping).
      * @return A newly-created todo object based on the description.
      * @throws StellaException If the description provided is invalid.
      */
@@ -40,14 +39,14 @@ public class ToDo extends Task {
         try {
             ToDo.checkDescription(description);
             if (Task.countParameter(description) == 0) {
-                String details = description.substring(commandKeyword.length());
+                String details = description.substring(COMMAND_KEYWORD.length());
 
                 return new ToDo(details);
             }
             if (Task.countParameter(description) == 1) {
                 int slashIndex = description.indexOf('/');
 
-                String details = description.substring(commandKeyword.length(), slashIndex);
+                String details = description.substring(COMMAND_KEYWORD.length(), slashIndex);
                 String priority = description.substring(slashIndex + 1);
 
                 return new ToDo(details, Priority.valueOf(priority));
@@ -56,11 +55,10 @@ public class ToDo extends Task {
         } catch (IllegalArgumentException e) {
             throw new UnknownInstructionException("Priority value");
         }
-
     }
 
     private static void checkDescription(String description) throws StellaException {
-        if (description.length() <= commandKeyword.length()) {
+        if (description.length() <= COMMAND_KEYWORD.length()) {
             throw new IncompleteInstructionException(description);
         }
 

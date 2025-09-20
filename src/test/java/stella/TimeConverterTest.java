@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class TimeConverterTest {
     @Test
-    public void convertDate_expectedInput_success() throws Exception {
+    public void convertDate_expectedInput_success() {
         assertEquals("12 March 2013",
                 TimeConverter.convertDate("12-03-2013"));
         assertEquals("01 December 2025",
@@ -22,7 +22,6 @@ public class TimeConverterTest {
         try {
             assertEquals("Unknown Timing",
                     TimeConverter.convertDate("32-21-2013"));
-
         } catch (DateTimeException e) {
             assertEquals("Invalid value for MonthOfYear (valid values 1 - 12): 20",
                     e.getMessage());
@@ -30,7 +29,7 @@ public class TimeConverterTest {
     }
 
     @Test
-    public void convertDateWithTime_expectedInput_success() throws Exception {
+    public void convertDateWithTime_expectedInput_success() {
         assertEquals("12:30, 12 March 2013",
                 TimeConverter.convertDateWithTime("12-03-2013-1230"));
         assertEquals("12:45, 01 December 2025",

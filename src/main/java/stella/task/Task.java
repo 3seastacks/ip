@@ -3,9 +3,10 @@ package stella.task;
 import stella.Priority;
 
 /**
- * Contains a String description (which describe the task)
- * and a boolean isDone (with true indicating that the task is
- * completed and false indicating that the task is not completed)
+ * Contains a String description and a boolean isDone.
+ * description describe the task.
+ * If isDone is true, the task is completed.
+ * If isDone is false, the task is not completed).
  * Task is the parent of 3 classes: Deadline, Event and ToDo.
  */
 public abstract class Task {
@@ -15,8 +16,9 @@ public abstract class Task {
 
     /**
      * Constructs a new Task object with a specified description,
-     * isDone status and taskPriority status. The isDone status is set
-     * to false by default. The taskPriority status is set to UNDECIDED.
+     * isDone status and taskPriority status.
+     * The isDone status is set to false by default.
+     * The taskPriority status is set to UNDECIDED.
      *
      * @param description The description of the task.
      */
@@ -28,8 +30,8 @@ public abstract class Task {
 
     /**
      * Constructs a new Task object with a specified description,
-     * isDone status and taskPriority status. The isDone status is set
-     * to false by default.
+     * isDone status and taskPriority status.
+     * The isDone status is set to false by default.
      *
      * @param description The description of the task.
      * @param taskPriority The priority of the task.
@@ -74,8 +76,8 @@ public abstract class Task {
 
     // JavaDoc comment for countParameter method is adapted from AI.
     /**
-     * Returns the number of inputs (excluding task name) found in
-     * user's task creation command (e.g. event open house/06-07-2025/07-07-2025/HIGH).
+     * Returns the number of inputs (excluding task name) found in user's task creation command,
+     * such as event open house/06-07-2025/07-07-2025/HIGH.
      *
      * @param command User's full command for task creation.
      * @return Number of inputs (excluding task name).

@@ -8,12 +8,11 @@ public class Stella {
     private Parser parser;
     private Ui ui;
 
-
     /**
-     * Constructs a new Stella object with the corresponding tasks, parser and ui
-     * The tasks is created based on what is stored in local storage. This tasks is
-     * then used to create the parser object, which in turn the parser object is used
-     * to create the ui object.
+     * Constructs a new Stella object with the corresponding tasks, parser and ui.
+     * The tasks are created based on what is stored in local storage.
+     * The tasks are then used to create the parser object,
+     * which in turn the parser object is used to create the ui object.
      */
     public Stella() {
         tasks = new TaskList(Storage.readFile());

@@ -2,12 +2,12 @@ package stella;
 
 import java.util.ArrayList;
 
-import stella.exception.IncompleteInstructionException;
-import stella.exception.UnknownInstructionException;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import stella.exception.IncompleteInstructionException;
+import stella.exception.UnknownInstructionException;
 
 /**
  * Contains tests for the Parser class.

@@ -10,13 +10,13 @@ import stella.Parser;
 import stella.Priority;
 
 /**
- * Represents a task that have a start date/time and an end date/time. An Event is
- * represented by four strings, which are the description, the start, the end and
- * priority. The default value for priority is UNDECIDED.
+ * Represents a task that have a start date/time and an end date/time.
+ * An Event is represented by four strings,
+ * which are the description, the start, the end and priority.
+ * The default value for priority is UNDECIDED.
  */
 public class Event extends Task {
-
-    public static final String commandKeyword = "event ";
+    public static final String COMMAND_KEYWORD = "event ";
 
     protected String start;
     protected String end;
@@ -42,8 +42,9 @@ public class Event extends Task {
     /**
      * Creates and returns a new event object based on a valid description.
      *
-     * @param description Description of the event, which comes from the user's commands (e.g.
-     *                    event graduation/12-07-2025-1430/12-07-2025-1800/HIGH).
+     * @param description Description of the event,
+     *                    which comes from the user's commands,
+     *                    such as event graduation/12-07-2025-1430/12-07-2025-1800/HIGH.
      * @return A newly-created event object based on the description.
      * @throws StellaException If the description provided is invalid.
      */
@@ -54,7 +55,7 @@ public class Event extends Task {
                 int curSlashIndex = description.indexOf('/');
                 int nextSlashIndex = description.indexOf('/', curSlashIndex + 1);
 
-                String details = description.substring(commandKeyword.length(), curSlashIndex);
+                String details = description.substring(COMMAND_KEYWORD.length(), curSlashIndex);
                 String start = description.substring(curSlashIndex + 1, nextSlashIndex);
                 String end = description.substring(nextSlashIndex + 1);
 
@@ -64,7 +65,7 @@ public class Event extends Task {
                 int curSlashIndex = description.indexOf('/');
                 int nextSlashIndex = description.indexOf('/', curSlashIndex + 1);
 
-                String details = description.substring(commandKeyword.length(), curSlashIndex);
+                String details = description.substring(COMMAND_KEYWORD.length(), curSlashIndex);
                 String start = description.substring(curSlashIndex + 1, nextSlashIndex);
 
                 curSlashIndex = nextSlashIndex;
@@ -82,7 +83,7 @@ public class Event extends Task {
     }
 
     private static void checkDescription(String description) throws StellaException {
-        if (description.length() <= commandKeyword.length()) {
+        if (description.length() <= COMMAND_KEYWORD.length()) {
             throw new IncompleteInstructionException(description);
         }
 
@@ -99,4 +100,3 @@ public class Event extends Task {
         }
     }
 }
-

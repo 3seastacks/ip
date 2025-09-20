@@ -9,9 +9,9 @@ import stella.task.Event;
 import stella.task.ToDo;
 
 /**
- * Interprets the user command, for example to
- * identify the command type and also to reformat the date provided
- * by the user to a more human-readable format.
+ * Interprets the user command,
+ * for example to identify the command type,
+ * and also to reformat the date provided by the user to a more human-readable format.
  */
 public class Parser {
     private TaskList tasks;
@@ -35,7 +35,7 @@ public class Parser {
     public String findCommand(String description) throws StellaException {
         assert description.length() > 0;
 
-        if (description.equals(("list"))) {
+        if (description.equals("list")) {
             return this.tasks.printList();
         } else if (description.contains("find")) {
             return tasks.findItem(description);
@@ -62,8 +62,8 @@ public class Parser {
         }
     }
 
-    private int findIndexForModification(String marker, String description)
-            throws IncompleteInstructionException {
+    private int findIndexForModification(
+            String marker, String description) throws IncompleteInstructionException {
         if (description.length() <= marker.length()) {
             throw new IncompleteInstructionException(description);
         }
@@ -73,17 +73,18 @@ public class Parser {
     }
 
     /**
-     * Returns the reformatted time if possible. If it is not possible to reformat,
+     * Returns the reformatted time if possible.
+     * If it is not possible to reformat,
      * return the time in the same raw format provided.
      *
      * @param time Time in raw format.
      * @return Formatted time if possible. Else, return the time in raw format.
      */
     public static String formatTime(String time) {
-        if (time.length() == TimeConverter.validDate.length()) {
+        if (time.length() == TimeConverter.VALID_DATE.length()) {
             return TimeConverter.convertDate(time);
         }
-        if (time.length() == TimeConverter.validDateWithTime.length()) {
+        if (time.length() == TimeConverter.VALID_DATE_WITH_TIME.length()) {
             return TimeConverter.convertDateWithTime(time);
         }
         return time;

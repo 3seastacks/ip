@@ -12,7 +12,6 @@ import javafx.stage.Stage;
  * Creates a GUI for Stella using FXML.
  */
 public class Main extends Application {
-
     private Stella stella = new Stella();
 
     @Override
@@ -22,7 +21,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setStella(stella);  // inject the Stella instance
+            fxmlLoader.<MainWindow>getController().setStella(stella); // inject the Stella instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,22 +1,21 @@
 package stella;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Converts date (or date with timing) to a more
- * human-readable format.
+ * Converts date (or date with timing) to a more human-readable format.
  */
 public class TimeConverter {
-    public static final String validDate = "dd-mm-yyyy";
-    public static final String validDateWithTime = "dd-mm-yyyy-tttt";
+    public static final String VALID_DATE = "dd-mm-yyyy";
+    public static final String VALID_DATE_WITH_TIME = "dd-mm-yyyy-tttt";
 
-    private static final int indexFirstDash = 2;
-    private static final int indexSecondDash = 5;
-    private static final int indexThirdDash = 10;
-    private static final int startIndexForMin = 13;
+    private static final int INDEX_OF_FIRST_DASH = 2;
+    private static final int INDEX_OF_SECOND_DASH = 5;
+    private static final int INDEX_OF_THIRD_DASH = 10;
+    private static final int START_INDEX_FOR_MIN = 13;
 
     /**
      * Converts date (with timing) to a more human-readable format.
@@ -29,13 +28,13 @@ public class TimeConverter {
      */
     public static String convertDateWithTime(String rawFormat) {
         try {
-            assert rawFormat.length() == validDateWithTime.length();
+            assert rawFormat.length() == VALID_DATE_WITH_TIME.length();
 
-            int day = Integer.parseInt(rawFormat.substring(0, indexFirstDash));
-            int month = Integer.parseInt(rawFormat.substring(indexFirstDash + 1, indexSecondDash));
-            int year = Integer.parseInt(rawFormat.substring(indexSecondDash + 1, indexThirdDash));
-            int hour = Integer.parseInt(rawFormat.substring(indexThirdDash + 1, startIndexForMin));
-            int min = Integer.parseInt(rawFormat.substring(startIndexForMin));
+            int day = Integer.parseInt(rawFormat.substring(0, INDEX_OF_FIRST_DASH));
+            int month = Integer.parseInt(rawFormat.substring(INDEX_OF_FIRST_DASH + 1, INDEX_OF_SECOND_DASH));
+            int year = Integer.parseInt(rawFormat.substring(INDEX_OF_SECOND_DASH + 1, INDEX_OF_THIRD_DASH));
+            int hour = Integer.parseInt(rawFormat.substring(INDEX_OF_THIRD_DASH + 1, START_INDEX_FOR_MIN));
+            int min = Integer.parseInt(rawFormat.substring(START_INDEX_FOR_MIN));
 
             LocalDateTime input = LocalDateTime.of(year, month, day, hour, min);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd MMMM yyyy");
@@ -60,11 +59,11 @@ public class TimeConverter {
      */
     public static String convertDate(String rawFormat) {
         try {
-            assert rawFormat.length() == validDate.length();
+            assert rawFormat.length() == VALID_DATE.length();
 
-            int day = Integer.parseInt(rawFormat.substring(0, indexFirstDash));
-            int month = Integer.parseInt(rawFormat.substring(indexFirstDash + 1, indexSecondDash));
-            int year = Integer.parseInt(rawFormat.substring(indexSecondDash + 1));
+            int day = Integer.parseInt(rawFormat.substring(0, INDEX_OF_FIRST_DASH));
+            int month = Integer.parseInt(rawFormat.substring(INDEX_OF_FIRST_DASH + 1, INDEX_OF_SECOND_DASH));
+            int year = Integer.parseInt(rawFormat.substring(INDEX_OF_SECOND_DASH + 1));
 
             LocalDate input = LocalDate.of(year, month, day);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");

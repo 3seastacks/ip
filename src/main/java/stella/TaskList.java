@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import stella.exception.IncompleteInstructionException;
 import stella.exception.UnknownInstructionException;
+
 import stella.task.Task;
 
 /**
  * Represents a group of tasks.
  */
 public class TaskList {
-
-    public ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
 
     /**
      * Constructs a new TaskList with the specified tasks.
@@ -40,8 +40,8 @@ public class TaskList {
     }
 
     /**
-     * Deletes the item from list, informs users of deletion and
-     * ensures item deletion are updated in local storage.
+     * Deletes the item from list, informs users of deletion,
+     * and ensures item deletion are updated in local storage.
      *
      * @param index Index of item to be deleted.
      * @return Stella's response associated with deletion of task.
@@ -49,8 +49,8 @@ public class TaskList {
     public String deleteItem(int index) {
         Task temp = tasks.remove(index);
         Storage.modifyTaskList(tasks);
-        return "I have removed the following: \n" + temp +  "\n" +
-                "Now you have " + tasks.size() + " task(s) in the list";
+        return "I have removed the following: \n" + temp + "\n"
+                + "Now you have " + tasks.size() + " task(s) in the list";
     }
 
     /**
@@ -86,7 +86,7 @@ public class TaskList {
         tasks.add(task);
         Storage.addTask(task);
         return "added: " + task + "\n"
-                + "Now you have "  + tasks.size() + " task(s) in the list";
+                + "Now you have " + tasks.size() + " task(s) in the list";
     }
 
     /**
@@ -102,19 +102,11 @@ public class TaskList {
         if (description.length() <= command.length()) {
             throw new IncompleteInstructionException(description);
         }
-
         if (this.tasks.isEmpty()) {
             return "Empty task list. Cannot search for anything";
         }
 
-        String keyword = "";
-        int keywordLength = description.length() - command.length();
-        int startIndexForKeyword = command.length();
-        if (keywordLength == 1) {
-            keyword += description.charAt(startIndexForKeyword);
-        } else {
-            keyword += description.substring(startIndexForKeyword);
-        }
+        String keyword = this.findKeyword(description);
 
         TaskList result = new TaskList(new ArrayList<>());
         for (int i = 1; i <= tasks.size(); i = i + 1) {
@@ -132,6 +124,18 @@ public class TaskList {
         }
     }
 
+    private String findKeyword(String description) {
+        String command = "find ";
+        int keywordLength = description.length() - command.length();
+        int startIndexForKeyword = command.length();
+        String keyword = "";
+
+        if (keywordLength == 1) {
+            keyword += description.charAt(startIndexForKeyword);
+        } else {
+            keyword += description.substring(startIndexForKeyword);
+        }
+
+        return keyword;
+    }
 }
-
-
