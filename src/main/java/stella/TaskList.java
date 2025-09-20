@@ -7,20 +7,25 @@ import stella.exception.UnknownInstructionException;
 import stella.task.Task;
 
 /**
- * Represents a group of tasks
+ * Represents a group of tasks.
  */
 public class TaskList {
 
     public ArrayList<Task> tasks;
 
+    /**
+     * Constructs a new TaskList with the specified tasks.
+     *
+     * @param tasks The tasks.
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
     /**
-     * Print out each task on the list. Inform user if list is empty
+     * Prints out each task on the list. Informs user if list is empty.
      *
-     * @return Stella's response associated with printing of list
+     * @return Stella's response associated with printing of list.
      */
     public String printList() {
         if (this.tasks.isEmpty()) {
@@ -35,11 +40,11 @@ public class TaskList {
     }
 
     /**
-     * Delete the item from list, inform users of deletion and
-     * ensure item deletion are updated in local storage
+     * Deletes the item from list, informs users of deletion and
+     * ensures item deletion are updated in local storage.
      *
-     * @param index Index of item to be deleted
-     * @return Stella's response associated with deletion of task
+     * @param index Index of item to be deleted.
+     * @return Stella's response associated with deletion of task.
      */
     public String deleteItem(int index) {
         Task temp = tasks.remove(index);
@@ -49,13 +54,13 @@ public class TaskList {
     }
 
     /**
-     * When user want to mark or unmark tasks, function would
-     * update the list, inform user of the change and ensure
-     * local storage take note of the change
+     * Updates the list, informs user of the change and ensures
+     * local storage take note of the change when tasks are marked or unmarked.
      *
-     * @param index Index of item to be modified
-     * @param description Either "mark" or "unmark"
-     * @return Stella's response associated with modification of task
+     * @param index Index of item to be modified.
+     * @param description Either "mark" or "unmark".
+     * @return Stella's response associated with modification of task.
+     * @throws UnknownInstructionException If description is not "mark" or "unmark".
      */
     public String modifyItem(int index, String description) throws UnknownInstructionException {
         if (description == "unmark") {
@@ -72,10 +77,10 @@ public class TaskList {
     }
 
     /**
-     * Add item to list and local storage, and inform user of the addition
+     * Adds item to list and local storage, and informs user of the addition.
      *
-     * @param task Task to be added to the list
-     * @return Stella's response associated with addition of task
+     * @param task Task to be added to the list.
+     * @return Stella's response associated with addition of task.
      */
     public String addItem(Task task) {
         tasks.add(task);
@@ -85,9 +90,11 @@ public class TaskList {
     }
 
     /**
-     * Search for all the tasks whose description matches the identifier
-     * @param description Contain find command and a keyword to identify tasks
-     * @return A TaskList with tasks whose description matches the identifier
+     * Searches for all the tasks whose description matches the identifier.
+     *
+     * @param description Contains find command and a keyword to identify tasks.
+     * @return A TaskList with tasks whose description matches the identifier.
+     * @throws IncompleteInstructionException If the description is incomplete.
      */
     public String findItem(String description) throws IncompleteInstructionException {
         String command = "find ";

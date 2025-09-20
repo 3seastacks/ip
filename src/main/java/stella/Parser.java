@@ -9,25 +9,28 @@ import stella.task.Event;
 import stella.task.ToDo;
 
 /**
- * Responsible in making sense of the user command, for example to
+ * Interprets the user command, for example to
  * identify the command type and also to reformat the date provided
- * by the user to a more human-readable format
+ * by the user to a more human-readable format.
  */
 public class Parser {
     private TaskList tasks;
 
+    /**
+     * Constructs a new Parser based on the specified tasks.
+     *
+     * @param tasks The tasks.
+     */
     public Parser(TaskList tasks) {
         this.tasks = tasks;
     }
 
     /**
-     * Craft Stella's response based on user's command
+     * Crafts Stella's response based on user's command.
      *
-     * @param description A String consisting of user's command
-     * @return Stella's response
-     * @throws IncompleteInstructionException If command contain insufficient information
-     * @throws UnknownInstructionException    If no
-     *                                        such command exists
+     * @param description A String consisting of user's command.
+     * @return Stella's response.
+     * @throws StellaException If the user enters an invalid command.
      */
     public String findCommand(String description) throws StellaException {
         assert description.length() > 0;
@@ -69,6 +72,13 @@ public class Parser {
         return Integer.valueOf(userInputValue) - 1;
     }
 
+    /**
+     * Returns the reformatted time if possible. If it is not possible to reformat,
+     * return the time in the same raw format provided.
+     *
+     * @param time Time in raw format.
+     * @return Formatted time if possible. Else, return the time in raw format.
+     */
     public static String formatTime(String time) {
         if (time.length() == TimeConverter.validDate.length()) {
             return TimeConverter.convertDate(time);

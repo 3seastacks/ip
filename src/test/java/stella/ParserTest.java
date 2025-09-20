@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+/**
+ * Contains tests for the Parser class.
+ */
 public class ParserTest {
     @Test
     public void findCommand_unknownInstruction_exceptionThrown() {

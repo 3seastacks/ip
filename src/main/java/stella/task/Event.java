@@ -11,7 +11,8 @@ import stella.Priority;
 
 /**
  * Represents a task that have a start date/time and an end date/time. An Event is
- * represented by 3 strings, which are the description, the start and the end.
+ * represented by four strings, which are the description, the start, the end and
+ * priority. The default value for priority is UNDECIDED.
  */
 public class Event extends Task {
 
@@ -38,6 +39,14 @@ public class Event extends Task {
                 + " (Priority: " + taskPriority + ")";
     }
 
+    /**
+     * Creates and returns a new event object based on a valid description.
+     *
+     * @param description Description of the event, which comes from the user's commands (e.g.
+     *                    event graduation/12-07-2025-1430/12-07-2025-1800/HIGH).
+     * @return A newly-created event object based on the description.
+     * @throws StellaException If the description provided is invalid.
+     */
     public static Event createTask(String description) throws StellaException {
         try {
             Event.checkDescription(description);

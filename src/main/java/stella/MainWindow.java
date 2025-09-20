@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 /**
- * Controller for the main GUI.
+ * Controls the main GUI.
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -30,7 +30,11 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Stella instance */
+    /**
+     * Injects the Stella instance.
+     *
+     * @param s A Stella object.
+     */
     public void setStella(Stella s) {
         stella = s;
         dialogContainer.getChildren().addAll(

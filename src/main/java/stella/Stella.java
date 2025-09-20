@@ -1,7 +1,7 @@
 package stella;
 
 /**
- *  Responsible for initialising the Stella application
+ *  Initialises the Stella application.
  */
 public class Stella {
     private TaskList tasks;
@@ -9,6 +9,12 @@ public class Stella {
     private Ui ui;
 
 
+    /**
+     * Constructs a new Stella object with the corresponding tasks, parser and ui
+     * The tasks is created based on what is stored in local storage. This tasks is
+     * then used to create the parser object, which in turn the parser object is used
+     * to create the ui object.
+     */
     public Stella() {
         tasks = new TaskList(Storage.readFile());
         parser = new Parser(tasks);
@@ -17,10 +23,10 @@ public class Stella {
 
 
     /**
-     * Generate Stella's response based on User's response
+     * Generates Stella's response based on User's response.
      *
-     * @param input User's response
-     * @return Stella's response
+     * @param input User's response.
+     * @return Stella's response.
      */
     public String getResponse(String input) {
         return ui.callInteraction(input);

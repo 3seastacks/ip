@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Stella using FXML.
+ * Creates a GUI for Stella using FXML.
  */
 public class Main extends Application {
 

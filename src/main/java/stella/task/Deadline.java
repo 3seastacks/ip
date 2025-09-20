@@ -10,8 +10,9 @@ import stella.Parser;
 import stella.Priority;
 
 /**
- * Represents a type of task that have a deadline. It is represented by
- * two strings, which are the description and deadline.
+ * Represents a type of task that have a deadline. A Deadline is represented by three strings,
+ * which are the description, deadline and priority. The default value for priority is
+ * UNDECIDED.
  */
 public class Deadline extends Task {
 
@@ -34,6 +35,14 @@ public class Deadline extends Task {
         return "[D]" + super.toString() + " (by: " + this.deadline + ")" + " (Priority: " + taskPriority + ")";
     }
 
+    /**
+     * Creates and returns a new deadline object based on a valid description.
+     *
+     * @param description Description of the deadline, which comes from the user's commands (e.g.
+     *                    deadline homework/12-03-2025-1800).
+     * @return A newly-created deadline object based on the description.
+     * @throws StellaException If the description provided is invalid.
+     */
     public static Deadline createTask(String description) throws StellaException {
         try {
             Deadline.checkDescription(description);
@@ -60,6 +69,7 @@ public class Deadline extends Task {
             throw new UnknownInstructionException("Priority value");
         }
     }
+
 
     private static void checkDescription(String description) throws StellaException {
         if (description.length() <= commandKeyword.length()) {

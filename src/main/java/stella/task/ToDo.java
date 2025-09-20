@@ -5,11 +5,11 @@ import stella.exception.IncompleteInstructionException;
 import stella.exception.StellaException;
 import stella.exception.UnknownInstructionException;
 
-import stella.Parser;
 import stella.Priority;
 
 /**
- * Represent a task with the only detail being the task description
+ * Represents a task with two strings, which are the description and priority.
+ * The default value for priority is UNDECIDED.
  */
 public class ToDo extends Task {
 
@@ -28,6 +28,14 @@ public class ToDo extends Task {
         return "[T]" + super.toString() + " (Priority: " + taskPriority + ")";
     }
 
+    /**
+     * Creates and returns a new todo object based on a valid description.
+     *
+     * @param description Description of the todo, which comes from the user's commands (e.g.
+     *                    todo shopping).
+     * @return A newly-created todo object based on the description.
+     * @throws StellaException If the description provided is invalid.
+     */
     public static ToDo createTask(String description) throws StellaException {
         try {
             ToDo.checkDescription(description);

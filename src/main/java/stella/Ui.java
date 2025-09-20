@@ -6,21 +6,27 @@ import stella.exception.InsufficientParameterException;
 import stella.exception.UnknownInstructionException;
 
 /**
- * Responsible for dealing with the interactions with the user, including
- * greeting, responding to unexpected responses from user and farewell
+ * Deals with the interactions with the user, including
+ * greeting, responding to unexpected responses from user and farewell.
  */
 public class Ui {
     private Parser parser;
+
+    /**
+     * Constructs a new Ui object with a specified parser.
+     *
+     * @param parser The parser.
+     */
     public Ui(Parser parser) {
         this.parser = parser;
     }
 
     /**
-     * Interact with user, while catching exceptions
-     * when user provide unexpected reply
+     * Interacts with user, while catching exceptions
+     * when user provide unexpected reply.
      *
-     * @param userInput user's command
-     * @return Stella's response
+     * @param userInput user's command.
+     * @return Stella's response.
      */
     public String callInteraction(String userInput) {
         try {

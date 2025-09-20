@@ -5,6 +5,9 @@ import java.time.DateTimeException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Contains the tests for the TimeConverter class.
+ */
 public class TimeConverterTest {
     @Test
     public void convertDate_expectedInput_success() throws Exception {

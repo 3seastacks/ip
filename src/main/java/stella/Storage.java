@@ -16,8 +16,8 @@ import stella.task.Task;
 import stella.task.ToDo;
 
 /**
- * Responsible for loading tasks from the local storage
- * and saving tasks to the local storage
+ * Loads tasks from the local storage
+ * and saves tasks to the local storage.
  */
 public interface Storage {
     String DATA_STORAGE_PATH = "../data/stella.txt";
@@ -25,11 +25,11 @@ public interface Storage {
     int taskPrefixLength = taskPrefixExample.length();
 
     /**
-     * Return task with corresponding details (e.g. task description, type of task,
-     * whether task is completed or not) depending on description
+     * Returns task with corresponding details (e.g. task description, type of task,
+     * whether task is completed or not) depending on description.
      *
-     * @param description Specify task to be created
-     * @return Corresponding task that matches description given
+     * @param description Specifies task to be created.
+     * @return Corresponding task that matches description given.
      */
     static Task createTask(String description) {
         Task newTask = null;
@@ -105,10 +105,10 @@ public interface Storage {
     }
 
     /**
-     * Read in the .txt input from local storage and returns a list containing
+     * Reads in the .txt input from local storage and returns a list containing
      * the corresponding tasks.Create the .txt file if no such input .txt file found.
      *
-     * @return ArrayList<Task> containing tasks based on information stored in local storage
+     * @return ArrayList<Task> containing tasks based on information stored in local storage.
      */
     static ArrayList<Task> readFile() {
         for (int attempt = 1; attempt <= 2; attempt++) {
@@ -136,9 +136,9 @@ public interface Storage {
     }
 
     /**
-     * Update list in local storage to include task
+     * Updates list in local storage to include task.
      *
-     * @param task Task to be added to local storage
+     * @param task Task to be added to local storage.
      */
     static void addTask(Task task) {
         try {
@@ -152,9 +152,10 @@ public interface Storage {
     }
 
     /**
-     * When list is recently modified, call this function to update the local storage
+     * Calls this function to update the local storage when
+     * list is recently modified.
      *
-     * @param list The newly modified list used to update local storage
+     * @param list The newly modified list used to update local storage.
      */
     static void modifyTaskList(ArrayList<Task> list) {
         try {
