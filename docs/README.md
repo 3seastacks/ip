@@ -16,8 +16,8 @@ There is also an option to include the priority level of the task (which include
 
 ### Specifying time
 There are also three ways to specify time, which will come in useful when adding event or deadline. The three ways are:
-1. dd-mm-yyyy (e.g. 12-06-2025, which is displayed as 06 June 2025 in the application)
-2. dd-mm-yyyy-hhmm (e.g. 12-06-2025-2359, which is displayed as 23:59, 06 June 2025 in the application)
+1. dd-mm-yyyy (e.g. 12-06-2025, which is displayed as 12 June 2025 in the application)
+2. dd-mm-yyyy-hhmm (e.g. 12-06-2025-2359, which is displayed as 23:59, 12 June 2025 in the application)
 3. Or any other format you prefer (e.g. Today, next Monday, this afternoon)
 
 ## Adding tasks
